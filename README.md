@@ -19,9 +19,11 @@ Alternativ kann auch GitHub Desktop oder die GitHub-Integration im VS Code verwe
 ### Virtual Environement
 Im 2gbm-Ordner soll nun ein virtuelles Environement erstellt werden. Dies dient dazu, dass alle Bibliotheken miteinander kompatibel bleiben und nicht durch Updates geändert werden.
 ```
-python -m venv msL_env
+python -m venv .venv
 ```
-Dabei ist `msL_env` der Name des Environements und kann frei gewählt werden.
+Um die nötigen Bibliotheken in das virtuelle Environement zu laden muss es zuerst aktiviert werden.
+
+
 
 ## Unit Tests
 
