@@ -14,14 +14,14 @@ from STservo_sdk import *                 # Uses STServo SDK library
 
 def get_angle2(servo_position2):
     # TODO implement angle calculation
-    # INFO motor position is in range 0-4000
+    # INFO motor position is in range 0-4096
     # Output is in radians
     theta2 = 0
     return theta2
 
 def get_angle1(servo_position2):
     # TODO implement angle calculation
-    # INFO motor position is in range 0-4000
+    # INFO motor position is in range 0-4096
     # Output is in radians
     theta1 = 0
     return theta1
