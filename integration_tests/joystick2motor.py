@@ -16,7 +16,7 @@ com_port_nano = os.getenv("COM_PORT_NANO")
 ser = serial.Serial(com_port_nano, 115200, timeout=1)
 
 STS_MOVING_ACC              = 50          # STServo moving acc
-STS_ID                      = 1           # STServo ID
+STS_ID                      = 2           # STServo ID
 
 # Open port
 if portHandler.openPort():

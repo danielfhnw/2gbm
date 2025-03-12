@@ -13,17 +13,19 @@ from STservo_sdk import *                 # Uses STServo SDK library
 
 
 def get_angle(servo_position):
-    # TODO implement angle calculation
-    # INFO motor position is in range 0-4000
-    theta = 0
+    offset = 3710
+    theta = (-servo_position + offset) / 4000 * 2 * np.pi
     return theta
 
 def forward_kinematics(servo_position):
     theta = get_angle(servo_position)
-    # TODO implement forward kinematics
-    # INFO p is the position of the end effector
-    R_z = 0
+    R_z = np.array([
+        [np.cos(theta), -np.sin(theta), 0],
+        [np.sin(theta),  np.cos(theta), 0],
+        [0, 0, 1]
+    ])
     p = np.array([75, 0, 0])
+    p = R_z @ p
     return p
 
 

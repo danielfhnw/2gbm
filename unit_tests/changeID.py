@@ -57,9 +57,9 @@ else:
 sts_comm_result, sts_error = packetHandler.changeID(args.id_old, args.id_new) 
 if sts_comm_result != COMM_SUCCESS:
     print("%s" % packetHandler.getTxRxResult(sts_comm_result))
-    print("Now STServo ID is %d" % args.id_new)
 elif sts_error != 0:
     print("%s" % packetHandler.getRxPacketError(sts_error))
+    print("Now STServo ID is %d" % args.id_new)
 
 # Close port
 portHandler.closePort()
