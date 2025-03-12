@@ -53,7 +53,7 @@ Dieses Skript probiert alle IDs von 1-20 durch und zeigt welche Motoren angehän
 ### changeID.py
 Dieses Skript kann zum Ändern der ID eines Motors verwendet werden. Als Argumente müssen die alte und die neue ID des Motors übergeben werden.
 ```
-python changeID.py 1 4
+python \path\to\changeID.py 1 4
 ```
 Dieser Befehl spricht den Motor mit der ID 1 an und ändert sie auf 4. Es muss beachtet werden, dass jede ID nur einmal auf dem Bus vorkommen darf.
 
@@ -63,7 +63,7 @@ Die folgenden Skripts können ohne Anpassungen verwendet werden, um die Verknüp
 ### joystick2motor.py
 Dieses Skript liest die vertikale Achse des Joysticks aus und übergibt sie als Geschwindigkeitssollwert einem Motor. Die ID des zu steuernden Motor mus als Argument mitgegeben werden.
 ```
-python joystick2motor.py 2
+python \path\to\joystick2motor.py 2
 ```
 Das Programm kann mittels `Ctrl+C` abgebrochen werden.
 
