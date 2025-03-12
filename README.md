@@ -37,7 +37,11 @@ pip install -r requirements.txt
 Sobald alles erfolgreich installiert wurde, ist das virtuelle Environement bereit.
 
 ### Environement Variable
-Damit nicht in jedem Skript die COM-Ports angepasst werden müssen, werden in diesem Projekt Environement Variablen zur Speicherung verwendet. Dies hat den Vorteil, dass die Skripts updated werden können, ohne dass die COM-Ports überschrieben werden. Damit dies funktioniert muss im 2gbm-Ordner ein File erstellt werden mit dem Namen `.env` und folgendem Inhalt.
+Damit nicht in jedem Skript die COM-Ports angepasst werden müssen, werden in diesem Projekt Environement Variablen zur Speicherung verwendet. Dies hat den Vorteil, dass die Skripts updated werden können, ohne dass die COM-Ports überschrieben werden. Damit dies funktioniert muss im 2gbm-Ordner ein File erstellt werden mit dem Namen `.env`. Dies kann mit dem folgenden Befehl erstellt werden.
+```
+notepad .env
+```
+Diese Datei muss mit folgendem Inhalt gefüllt werden.
 ```
 COM_PORT_NANO=COM3
 COM_PORT_MOTOR=COM4
