@@ -45,6 +45,7 @@ Die folgenden Skripts können ohne Anpassungen verwendet werden, um die einzelne
 
 ### joystick.py
 Dieses Skript greift die Joystick-Daten vom Nano ab und gibt sie auf dem Terminal aus.
+Das Programm kann mittels `Ctrl+C` abgebrochen werden.
 
 ### ping.py
 Dieses Skript probiert alle IDs von 1-20 durch und zeigt welche Motoren angehängt sind.
@@ -60,3 +61,15 @@ Dieser Befehl spricht den Motor mit der ID 1 an und ändert sie auf 4. Es muss b
 Die folgenden Skripts können ohne Anpassungen verwendet werden, um die Verknüpfung zwischen den Hardwareelementen zu prüfen.
 
 ### joystick2motor.py
+Dieses Skript liest die vertikale Achse des Joysticks aus und gibt sie als Geschwindigkeitssollwert dem Motor mit der ID 2. Das 
+Das Programm kann mittels `Ctrl+C` abgebrochen werden.
+
+## Häufige Fehler
+
+```
+[TxRxResult] There is no status packet!
+```
+Mögliche Ursachen:
+- Falsche Motor ID
+- Motor nicht eingesteckt
+- Keine 12V Speisespannung am Board
