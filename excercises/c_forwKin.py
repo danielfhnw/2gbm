@@ -17,6 +17,7 @@ def forward_kinematics(servo_position2):
     theta = get_angle2(servo_position2)
     # TODO implement forward kinematics from coordinate system 5 to 2
     # INFO p is the position of the end effector
+    # INFO arm length is 75mm
     T54 = 0
     T43 = 0
     T32 = 0

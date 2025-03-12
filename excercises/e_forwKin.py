@@ -16,13 +16,15 @@ from a_remap import get_angle1, get_angle2
 def forward_kinematics(servo_position1, servo_position2):
     theta1 = get_angle1(servo_position1)
     theta2 = get_angle2(servo_position2)
-    # TODO implement forward kinematics from coordinate system 5 to 1
+    # TODO implement forward kinematics from coordinate system 5 to 0
     # INFO p is the position of the end effector
     # INFO arm length is 75mm
+    # INFO joystick offset is 65mm
     T54 = 0
     T43 = 0
     T32 = 0
     T21 = 0
+    T10 = 0
     p = np.array([0, 0, 0, 1])
     return p
 
