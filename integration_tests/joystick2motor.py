@@ -1,3 +1,4 @@
+import argparse
 import sys
 import os
 import serial
@@ -6,6 +7,24 @@ current_dir = os.path.dirname(os.path.abspath(__file__))  # unit_test/
 parent_dir = os.path.abspath(os.path.join(current_dir, "..")) 
 sys.path.append(parent_dir)
 from STservo_sdk import *                 # Uses STServo SDK library
+
+def check_id(id):
+    if 1 <= id <= 20:
+        print("ID is valid.")
+        return True
+    else:
+        print("Invalid IDs: must be between 1 and 20 (inclusive).")
+        return False
+
+parser = argparse.ArgumentParser(description="Check if the ID is within range (1-20).")
+parser.add_argument("id", type=int, help="First ID (1-20)")
+args = parser.parse_args()
+
+if check_id(args.id):
+    print("Proceeding with the operation.")
+else:
+    print("Operation aborted.")
+    quit()
 
 load_dotenv()
 com_port_motor = os.getenv("COM_PORT_MOTOR")
@@ -16,7 +35,7 @@ com_port_nano = os.getenv("COM_PORT_NANO")
 ser = serial.Serial(com_port_nano, 115200, timeout=1)
 
 STS_MOVING_ACC              = 50          # STServo moving acc
-STS_ID                      = 2           # STServo ID
+STS_ID                      = args.id           # STServo ID
 
 # Open port
 if portHandler.openPort():
