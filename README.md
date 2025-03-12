@@ -30,7 +30,7 @@ Anschliessend müssen die nötigen Bibliotheken heruntergeladen werden. Dazu wir
 ```
 pip install -r requirements.txt
 ```
-
+Sobald alles erfolgreich installiert wurde, ist das virtuelle Environement bereit.
 
 
 ## Unit Tests
