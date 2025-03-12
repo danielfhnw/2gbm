@@ -8,7 +8,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))  # unit_test/
 parent_dir = os.path.abspath(os.path.join(current_dir, "..")) 
 sys.path.append(parent_dir)
 from STservo_sdk import *                 # Uses STServo SDK library
-from f_inv_remap import get_servo1, get_servo2
+from f_inv_remap_sol import get_servo1, get_servo2
 
 parser = argparse.ArgumentParser(description="get x and y")
 parser.add_argument("x", type=float, help="x_soll")
@@ -20,9 +20,7 @@ args = parser.parse_args()
 
 
 def inverse_kinematics(x, y):
-    # TODO implement inverse kinematics for motor 2 in coordinate system 3
-    theta2 = 0
-    
+    theta2 = np.arctan2(y, x)
     servo_pos = get_servo2(theta2)
     return servo_pos
 
@@ -90,6 +88,7 @@ if __name__ == "__main__":
                     if sts_error != 0:
                         print(packetHandler.getRxPacketError(sts_error))
 
+                    soll_pos1 = 0
                     soll_pos2 = int(inverse_kinematics(args.x, args.y))
                 
                     # Write STServo goal position/moving speed/moving acc
@@ -99,7 +98,7 @@ if __name__ == "__main__":
                     if sts_error != 0:
                         print("%s" % packetHandler.getRxPacketError(sts_error))
 
-                    print(f"servo1: {get_servo1(args.angle1)}, servo2: {get_servo2(args.angle2)}")
+                    print(f"servo1: {soll_pos1}, servo2: {soll_pos2}")
 
     except KeyboardInterrupt:
         print("Program stopped")
