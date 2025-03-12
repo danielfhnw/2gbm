@@ -7,20 +7,36 @@ current_dir = os.path.dirname(os.path.abspath(__file__))  # unit_test/
 parent_dir = os.path.abspath(os.path.join(current_dir, "..")) 
 sys.path.append(parent_dir)
 from STservo_sdk import *                 # Uses STServo SDK library
-from a_remap import get_angle2
+from a_remap_sol import get_angle2
 
 
 
 
 
-def forward_kinematics(servo_position2):
-    theta = get_angle2(servo_position2)
+def forward_kinematics(servo_position):
+    theta = get_angle2(servo_position)
     # TODO implement forward kinematics from coordinate system 5 to 2
     # INFO p is the position of the end effector
-    T54 = 0
-    T43 = 0
-    T32 = 0
+    T54 = np.array([
+        [1, 0, 0, 75],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]
+    ])
+    T43 = np.array([
+        [np.cos(theta), -np.sin(theta), 0, 0],
+        [np.sin(theta),  np.cos(theta), 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]
+    ])
+    T32 = np.array([
+        [1, 0, 0, -75],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]
+    ])
     p = np.array([0, 0, 0, 1])
+    p = T32 @ T43 @ T54 @ p
     return p
 
 

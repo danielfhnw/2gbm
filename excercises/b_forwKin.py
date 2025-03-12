@@ -7,15 +7,15 @@ current_dir = os.path.dirname(os.path.abspath(__file__))  # unit_test/
 parent_dir = os.path.abspath(os.path.join(current_dir, "..")) 
 sys.path.append(parent_dir)
 from STservo_sdk import *                 # Uses STServo SDK library
-from a_remap import get_angle
+from a_remap import get_angle2
 
 
 
 
 
-def forward_kinematics(servo_position):
-    theta = get_angle(servo_position)
-    # TODO implement forward kinematics
+def forward_kinematics(servo_position2):
+    theta = get_angle2(servo_position2)
+    # TODO implement forward kinematics from coordinate system 5 to 3
     # INFO p is the position of the end effector
     R_z = 0
     p = np.array([75, 0, 0])
@@ -34,7 +34,9 @@ if __name__ == "__main__":
     ser = serial.Serial(com_port_nano, 115200, timeout=1)
 
     STS_MOVING_ACC              = 50          # STServo moving acc
-    STS_ID                      = 2           # STServo ID
+    STS_ID_1                      = 1           # STServo ID
+    STS_ID_2                      = 2           # STServo ID
+
 
     # Open port
     if portHandler.openPort():
@@ -51,11 +53,17 @@ if __name__ == "__main__":
         quit()
 
     # change Servos to Wheel Mode
-    sts_comm_result, sts_error = packetHandler.WheelMode(STS_ID)
+    sts_comm_result, sts_error = packetHandler.WheelMode(STS_ID_1)
     if sts_comm_result != COMM_SUCCESS:
         print("%s" % packetHandler.getTxRxResult(sts_comm_result))
     elif sts_error != 0:
         print("%s" % packetHandler.getRxPacketError(sts_error))
+    sts_comm_result, sts_error = packetHandler.WheelMode(STS_ID_2)
+    if sts_comm_result != COMM_SUCCESS:
+        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+    elif sts_error != 0:
+        print("%s" % packetHandler.getRxPacketError(sts_error))    
+    
 
     try:
         while True:
@@ -66,18 +74,29 @@ if __name__ == "__main__":
                 if len(values) == 2:  # Check we received all four values
 
                     # remap sensor values to corresponing axis
-                    speed = int(values[0])*10
+                    speed1 = int(values[1])*10
+                    speed2 = int(values[0])*10
                                     
                     # Read STServo present position
-                    servo_position, servo_speed, sts_comm_result, sts_error = packetHandler.ReadPosSpeed(STS_ID)
+                    servo_position1, servo_speed, sts_comm_result, sts_error = packetHandler.ReadPosSpeed(STS_ID_1)
                     if sts_comm_result != COMM_SUCCESS:
                         print(packetHandler.getTxRxResult(sts_comm_result))
                     if sts_error != 0:
                         print(packetHandler.getRxPacketError(sts_error))
-                    coords = forward_kinematics(servo_position)
+                    servo_position2, servo_speed, sts_comm_result, sts_error = packetHandler.ReadPosSpeed(STS_ID_2)
+                    if sts_comm_result != COMM_SUCCESS:
+                        print(packetHandler.getTxRxResult(sts_comm_result))
+                    if sts_error != 0:
+                        print(packetHandler.getRxPacketError(sts_error))
+                    coords = forward_kinematics(servo_position2)
                 
                     # Write STServo goal position/moving speed/moving acc
-                    sts_comm_result, sts_error = packetHandler.WriteSpec(STS_ID, speed, 0)
+                    sts_comm_result, sts_error = packetHandler.WriteSpec(STS_ID_1, speed1, 0)
+                    if sts_comm_result != COMM_SUCCESS:
+                        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+                    if sts_error != 0:
+                        print("%s" % packetHandler.getRxPacketError(sts_error))
+                    sts_comm_result, sts_error = packetHandler.WriteSpec(STS_ID_2, speed2, 0)
                     if sts_comm_result != COMM_SUCCESS:
                         print("%s" % packetHandler.getTxRxResult(sts_comm_result))
                     if sts_error != 0:
@@ -96,3 +115,4 @@ if __name__ == "__main__":
         if sts_error != 0:
             print("%s" % packetHandler.getRxPacketError(sts_error))
         portHandler.closePort() # Close port
+
