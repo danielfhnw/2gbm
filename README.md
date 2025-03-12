@@ -21,7 +21,15 @@ Im 2gbm-Ordner soll nun ein virtuelles Environement erstellt werden. Dies dient 
 ```
 python -m venv .venv
 ```
-Um die nötigen Bibliotheken in das virtuelle Environement zu laden muss es zuerst aktiviert werden.
+Um die nötigen Bibliotheken in das virtuelle Environement zu laden muss es zuerst aktiviert werden. Dies erfolgt über das activate-Script.
+```
+Scripts\activate.bat
+```
+Sobald das Environement aktiviert ist erscheint `(.venv)` vor dem Pfad.
+Anschliessend müssen die nötigen Bibliotheken heruntergeladen werden. Dazu wird der folgende Befehl verwendet.
+```
+pip install -r requirements.txt
+```
 
 
 
