@@ -57,6 +57,12 @@ python \path\to\changeID.py 1 4
 ```
 Dieser Befehl spricht den Motor mit der ID 1 an und ändert sie auf 4. Es muss beachtet werden, dass jede ID nur einmal auf dem Bus vorkommen darf.
 
+### get_position_wheel.py
+Dieses Skript gibt die Positionen der Motoren im Wheel-Modus zurück
+
+### get_position_servo.py
+Dieses Skript gibt die Positionen der Motoren im Servo-Modus zurück
+
 ## Integration Tests
 Die folgenden Skripts können ohne Anpassungen verwendet werden, um die Verknüpfung zwischen den Hardwareelementen zu prüfen.
 
