@@ -15,6 +15,10 @@ Der Ordner mit allen Unterlagen kann mit folgendem Codezeilenbefehl kopiert werd
 git clone https://github.com/danielfhnw/2gbm
 ```
 Alternativ kann auch GitHub Desktop oder die GitHub-Integration im VS Code verwendet werden.
+Um in den 2gbm Ordner zu gelangen kann folgende Kommandozeileneingabe verwendet werden.
+```
+cd 2gbm
+```
 
 ### Virtual Environement
 Im 2gbm-Ordner soll nun ein virtuelles Environement erstellt werden. Dies dient dazu, dass alle Bibliotheken miteinander kompatibel bleiben und nicht durch Updates geändert werden.
