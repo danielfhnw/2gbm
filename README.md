@@ -41,13 +41,22 @@ COM_PORT_MOTOR=COM4
 Dabei muss der COM-Port für den Nano und das Motorboard entsprechend angepasst werden.
 
 ## Unit Tests
+Die folgenden Skripts können ohne Anpassungen verwendet werden, um die einzelnen Hardwareelemente zu prüfen.
 
 ### joystick.py
+Dieses Skript greift die Joystick-Daten vom Nano ab und gibt sie auf dem Terminal aus.
 
 ### ping.py
+Dieses Skript probiert alle IDs von 1-20 durch und zeigt welche Motoren angehängt sind.
 
 ### changeID.py
+Dieses Skript kann zum Ändern der ID eines Motors verwendet werden. Als Argumente müssen die alte und die neue ID des Motors übergeben werden.
+```
+python changeID.py 1 4
+```
+Dieser Befehl spricht den Motor mit der ID 1 an und ändert sie auf 4. Es muss beachtet werden, dass jede ID nur einmal auf dem Bus vorkommen darf.
 
 ## Integration Tests
+Die folgenden Skripts können ohne Anpassungen verwendet werden, um die Verknüpfung zwischen den Hardwareelementen zu prüfen.
 
 ### joystick2motor.py
