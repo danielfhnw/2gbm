@@ -1,7 +1,9 @@
 from dotenv import load_dotenv
 import os
 import sys
-sys.path.append("..")
+current_dir = os.path.dirname(os.path.abspath(__file__))  # unit_test/
+parent_dir = os.path.abspath(os.path.join(current_dir, "..")) 
+sys.path.append(parent_dir)
 from STservo_sdk import *                  # Uses STServo SDK library   
 
 load_dotenv()

@@ -2,7 +2,9 @@ import argparse
 from dotenv import load_dotenv
 import sys
 import os
-sys.path.append("..")
+current_dir = os.path.dirname(os.path.abspath(__file__))  # unit_test/
+parent_dir = os.path.abspath(os.path.join(current_dir, "..")) 
+sys.path.append(parent_dir)
 from STservo_sdk import *                 # Uses STServo SDK library
 
 
@@ -26,6 +28,7 @@ if check_ids(args.id_old, args.id_new):
     print("Proceeding with the operation.")
 else:
     print("Operation aborted.")
+    quit()
 
 load_dotenv()
 
@@ -54,9 +57,9 @@ else:
 sts_comm_result, sts_error = packetHandler.changeID(args.id_old, args.id_new) 
 if sts_comm_result != COMM_SUCCESS:
     print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+    print("Now STServo ID is %d" % args.id_new)
 elif sts_error != 0:
     print("%s" % packetHandler.getRxPacketError(sts_error))
-print("Now STServo ID is %d" % args.id_new)
 
 # Close port
 portHandler.closePort()
