@@ -82,3 +82,8 @@ Mögliche Ursachen:
 - Falsche Motor ID
 - Motor nicht eingesteckt
 - Keine 12V Speisespannung am Board
+
+```
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xfa in position 4: invalid start byte
+```
+Programm neu starten
