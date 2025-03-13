@@ -83,6 +83,7 @@ Das Programm kann mittels `Ctrl+C` abgebrochen werden.
 
 ## Häufige Fehler
 
+### Kommunikationsproblem mit dem Motorenboard
 ```
 [TxRxResult] There is no status packet!
 ```
@@ -91,6 +92,7 @@ Mögliche Ursachen:
 - Motor nicht eingesteckt
 - Keine 12V Speisespannung am Board
 
+### Kommunikationsproblem mit dem Arduino
 ```
 UnicodeDecodeError: 'utf-8' codec can't decode byte 0xfa in position 4: invalid start byte
 ```
