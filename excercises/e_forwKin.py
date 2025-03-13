@@ -8,8 +8,9 @@ parent_dir = os.path.abspath(os.path.join(current_dir, ".."))
 sys.path.append(parent_dir)
 from STservo_sdk import *                 # Uses STServo SDK library
 from a_remap import get_angle1, get_angle2
+# ------------------------------------------------------------------------------------------------
 
-
+# TODO change code only inside the forward_kinematics function
 
 
 
@@ -31,6 +32,8 @@ def forward_kinematics(servo_position1, servo_position2):
 
 
 
+
+# ------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     load_dotenv()
     com_port_motor = os.getenv("COM_PORT_MOTOR")

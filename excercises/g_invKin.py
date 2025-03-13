@@ -14,8 +14,9 @@ parser = argparse.ArgumentParser(description="get x and y")
 parser.add_argument("x", type=float, help="x_soll")
 parser.add_argument("y", type=float, help="y_soll")
 args = parser.parse_args()
+# ------------------------------------------------------------------------------------------------
 
-
+# TODO change code only inside the inverse_kinematics function
 
 
 
@@ -30,6 +31,7 @@ def inverse_kinematics(x, y):
 
 
 
+# ------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     load_dotenv()
     com_port_motor = os.getenv("COM_PORT_MOTOR")

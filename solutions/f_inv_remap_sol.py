@@ -13,6 +13,7 @@ parser = argparse.ArgumentParser(description="get angle1 and angle2")
 parser.add_argument("angle1", type=float, help="angle1")
 parser.add_argument("angle2", type=float, help="angle2")
 args = parser.parse_args()
+# ------------------------------------------------------------------------------------------------
 
 
 
@@ -34,6 +35,7 @@ def get_servo1(angle1):
 
 
 
+# ------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     load_dotenv()
     com_port_motor = os.getenv("COM_PORT_MOTOR")

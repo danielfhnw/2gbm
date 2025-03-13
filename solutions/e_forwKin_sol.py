@@ -8,6 +8,7 @@ parent_dir = os.path.abspath(os.path.join(current_dir, ".."))
 sys.path.append(parent_dir)
 from STservo_sdk import *                 # Uses STServo SDK library
 from a_remap_sol import get_angle1, get_angle2
+# ------------------------------------------------------------------------------------------------
 
 
 
@@ -16,8 +17,6 @@ from a_remap_sol import get_angle1, get_angle2
 def forward_kinematics(servo_position1, servo_position2):
     theta1 = get_angle1(servo_position1)
     theta2 = get_angle2(servo_position2)
-    # TODO implement forward kinematics from coordinate system 5 to 0
-    # INFO p is the position of the end effector
     T54 = np.array([
         [1, 0, 0, 75],
         [0, 1, 0, 0],
@@ -55,6 +54,8 @@ def forward_kinematics(servo_position1, servo_position2):
 
 
 
+
+# ------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     load_dotenv()
     com_port_motor = os.getenv("COM_PORT_MOTOR")

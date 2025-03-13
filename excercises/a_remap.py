@@ -7,8 +7,9 @@ current_dir = os.path.dirname(os.path.abspath(__file__))  # unit_test/
 parent_dir = os.path.abspath(os.path.join(current_dir, "..")) 
 sys.path.append(parent_dir)
 from STservo_sdk import *                 # Uses STServo SDK library
+# ------------------------------------------------------------------------------------------------
 
-
+# TODO change code only inside the get_angle functions
 
 
 
@@ -19,7 +20,7 @@ def get_angle2(servo_position2):
     theta2 = 0
     return theta2
 
-def get_angle1(servo_position2):
+def get_angle1(servo_position1):
     # TODO implement angle calculation
     # INFO motor position is in range 0-4096
     # Output is in radians
@@ -30,6 +31,7 @@ def get_angle1(servo_position2):
 
 
 
+# ------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     load_dotenv()
     com_port_motor = os.getenv("COM_PORT_MOTOR")
