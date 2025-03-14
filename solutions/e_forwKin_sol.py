@@ -43,7 +43,7 @@ def forward_kinematics(servo_position1, servo_position2):
     ])
     T10 = np.array([
         [1, 0, 0, 0],
-        [0, 1, 0, 65],
+        [0, 1, 0, 66],
         [0, 0, 1, 0],
         [0, 0, 0, 1]
     ])
