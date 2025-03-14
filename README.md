@@ -1,5 +1,8 @@
 # 2-Gelenk-Bogen-Modell
-Software zum ersten Teil im msL
+Dieses Repo enthält die Software zum ersten Teil im msL.
+
+Die Übungen sind im Wiki beschrieben und mit den folgenden Links erreichbar:
+- [Vorwärtstransformation](https://github.com/danielfhnw/2gbm/wiki/%C3%9Cbungen#vorw%C3%A4rts-kinematik)
 
 ## Installation 
 
