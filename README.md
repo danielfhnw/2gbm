@@ -10,10 +10,10 @@ Im folgenden wird die Installation beschrieben
 ## Installation 
 
 ### Voraussetungen
-- Python
-- Python IDE (empfohlen VS Code)
-- Git
-- Arduino Nano Treiber
+- [Python](https://www.python.org/downloads/)
+- [Python IDE](https://code.visualstudio.com/download)
+- [Git](https://git-scm.com/downloads)
+- [Arduino Nano Treiber](https://www.makershop.de/ch340-341-usb-installieren/)
 
 ### Repository
 Der Ordner mit allen Unterlagen kann mit folgendem Codezeilenbefehl kopiert werden.
