@@ -10,10 +10,11 @@ sys.path.append(parent_dir)
 from STservo_sdk import *                 # Uses STServo SDK library
 from f_inv_remap_sol import get_servo1, get_servo2
 
-parser = argparse.ArgumentParser(description="get x and y")
-parser.add_argument("x", type=float, help="x_soll")
-parser.add_argument("y", type=float, help="y_soll")
-args = parser.parse_args()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="get x and y")
+    parser.add_argument("x", type=float, help="x_soll")
+    parser.add_argument("y", type=float, help="y_soll")
+    args = parser.parse_args()
 # ------------------------------------------------------------------------------------------------
 
 

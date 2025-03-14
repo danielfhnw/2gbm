@@ -102,3 +102,9 @@ class scscl(protocol_packet_handler):
 
     def unLockEprom(self, scs_id):
         return self.write1ByteTxRx(scs_id, SCSCL_LOCK, 0)
+
+    def changeID(self, sts_id, new_id):
+        self.unLockEprom(sts_id)
+        error = self.write1ByteTxRx(sts_id, scs_id, new_id)
+        self.LockEprom(sts_id)
+        return error

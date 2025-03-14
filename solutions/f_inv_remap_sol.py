@@ -9,10 +9,11 @@ parent_dir = os.path.abspath(os.path.join(current_dir, ".."))
 sys.path.append(parent_dir)
 from STservo_sdk import *                 # Uses STServo SDK library
 
-parser = argparse.ArgumentParser(description="get angle1 and angle2")
-parser.add_argument("angle1", type=float, help="angle1")
-parser.add_argument("angle2", type=float, help="angle2")
-args = parser.parse_args()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="get angle1 and angle2")
+    parser.add_argument("angle1", type=float, help="angle1")
+    parser.add_argument("angle2", type=float, help="angle2")
+    args = parser.parse_args()
 # ------------------------------------------------------------------------------------------------
 
 
