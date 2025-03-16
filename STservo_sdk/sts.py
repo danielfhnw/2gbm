@@ -117,4 +117,31 @@ class sts(protocol_packet_handler):
         error = self.write1ByteTxRx(sts_id, STS_ID, new_id)
         self.LockEprom(sts_id)
         return error
+    
+    def change_hold(self, sts_id, hold):
+        return self.write1ByteTxRx(sts_id, STS_TORQUE_ENABLE, hold)
+    
+    def zero_motor(self, sts_id, offset):
+        self.unLockEprom(sts_id)
+        error = self.write2ByteTxRx(sts_id, STS_OFS_L, offset)
+        self.LockEprom(sts_id)
+        return error
+    
+    def set_max_angle(self, sts_id, angle):
+        #self.unLockEprom(sts_id)
+        error = self.write2ByteTxRx(sts_id, STS_MAX_ANGLE_LIMIT_L, angle)
+        #self.LockEprom(sts_id)
+        return error
+    
+    def set_min_angle(self, sts_id, angle):
+        #self.unLockEprom(sts_id)
+        error = self.write2ByteTxRx(sts_id, STS_MIN_ANGLE_LIMIT_L, angle)
+        #self.LockEprom(sts_id)
+        return error
+
+    def set_multiturn(self, sts_id):
+        #self.unLockEprom(sts_id)
+        error = self.write1ByteTxRx(sts_id, 18, 28)
+        #self.LockEprom(sts_id)
+        return error
 

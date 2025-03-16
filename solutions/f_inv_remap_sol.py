@@ -21,16 +21,19 @@ if __name__ == "__main__":
 
 
 def get_servo2(angle2):
-    offset = 3630
-    pos2 = (-angle2 * 4000 / (2 * np.pi) + offset) % 4000
-    return pos2
+    if angle2 >= 0:
+        return -32768 - (-angle2 * 4096 / (2 * np.pi))
+    else:
+        return (-angle2 * 4096 / (2 * np.pi))
 
 def get_servo1(angle1):
-    # TODO implement angle calculation
-    # INFO motor position is in range 0-4000
-    # Output is in radians
-    pos1 = 0
-    return pos1
+    if angle1 > 0 or angle1 < -np.pi:
+        print("angle1 is out of range")
+        exit()
+    if angle1 >= 0:
+        return -32768 - (-angle1 * 4096 / (2 * np.pi))
+    else:
+        return (-angle1 * 4096 / (2 * np.pi))
 
 
 
@@ -66,56 +69,91 @@ if __name__ == "__main__":
         quit()
 
     # change Servos to Servo Mode
+    sts_comm_result, sts_error = packetHandler.ServoMode(STS_ID_1)
+    if sts_comm_result != COMM_SUCCESS:
+        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+    elif sts_error != 0:
+        print("%s" % packetHandler.getRxPacketError(sts_error))  
+
     sts_comm_result, sts_error = packetHandler.ServoMode(STS_ID_2)
     if sts_comm_result != COMM_SUCCESS:
         print("%s" % packetHandler.getTxRxResult(sts_comm_result))
     elif sts_error != 0:
         print("%s" % packetHandler.getRxPacketError(sts_error))    
     
+    sts_comm_result, sts_error = packetHandler.set_max_angle(STS_ID_1, 0)
+    if sts_comm_result != COMM_SUCCESS:
+        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+    elif sts_error != 0:
+        print("%s" % packetHandler.getRxPacketError(sts_error))
+
+    sts_comm_result, sts_error = packetHandler.set_min_angle(STS_ID_1, 0)
+    if sts_comm_result != COMM_SUCCESS:
+        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+    elif sts_error != 0:
+        print("%s" % packetHandler.getRxPacketError(sts_error))
+
+    sts_comm_result, sts_error = packetHandler.set_multiturn(STS_ID_1)
+    if sts_comm_result != COMM_SUCCESS:
+        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+    elif sts_error != 0:
+        print("%s" % packetHandler.getRxPacketError(sts_error))
+
+        sts_comm_result, sts_error = packetHandler.set_max_angle(STS_ID_2, 0)
+    if sts_comm_result != COMM_SUCCESS:
+        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+    elif sts_error != 0:
+        print("%s" % packetHandler.getRxPacketError(sts_error))
+
+    sts_comm_result, sts_error = packetHandler.set_min_angle(STS_ID_2, 0)
+    if sts_comm_result != COMM_SUCCESS:
+        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+    elif sts_error != 0:
+        print("%s" % packetHandler.getRxPacketError(sts_error))
+
+    sts_comm_result, sts_error = packetHandler.set_multiturn(STS_ID_2)
+    if sts_comm_result != COMM_SUCCESS:
+        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+    elif sts_error != 0:
+        print("%s" % packetHandler.getRxPacketError(sts_error))
 
     try:
-        while True:
-            if ser.in_waiting > 0:
-                line = ser.readline().decode('utf-8').strip()
-                values = line.split(",")
-                
-                if len(values) == 2:  # Check we received all four values
+        once = True
+        while once:
+            once = False                                 
+            # Read STServo present position
+            servo_position1, servo_speed, sts_comm_result, sts_error = packetHandler.ReadPosSpeed(STS_ID_1)
+            if sts_comm_result != COMM_SUCCESS:
+                print(packetHandler.getTxRxResult(sts_comm_result))
+            if sts_error != 0:
+                print(packetHandler.getRxPacketError(sts_error))
+            servo_position2, servo_speed, sts_comm_result, sts_error = packetHandler.ReadPosSpeed(STS_ID_2)
+            if sts_comm_result != COMM_SUCCESS:
+                print(packetHandler.getTxRxResult(sts_comm_result))
+            if sts_error != 0:
+                print(packetHandler.getRxPacketError(sts_error))
 
-                    # remap sensor values to corresponing axis
-                    speed1 = int(values[1])*10
-                    speed2 = int(values[0])*10
-                                    
-                    # Read STServo present position
-                    servo_position1, servo_speed, sts_comm_result, sts_error = packetHandler.ReadPosSpeed(STS_ID_1)
-                    if sts_comm_result != COMM_SUCCESS:
-                        print(packetHandler.getTxRxResult(sts_comm_result))
-                    if sts_error != 0:
-                        print(packetHandler.getRxPacketError(sts_error))
-                    servo_position2, servo_speed, sts_comm_result, sts_error = packetHandler.ReadPosSpeed(STS_ID_2)
-                    if sts_comm_result != COMM_SUCCESS:
-                        print(packetHandler.getTxRxResult(sts_comm_result))
-                    if sts_error != 0:
-                        print(packetHandler.getRxPacketError(sts_error))
+            soll_pos2 = int(get_servo2(args.angle2))
+            soll_pos1 = int(get_servo1(args.angle1))
+        
+            # Write STServo goal position/moving speed/moving acc
+            sts_comm_result, sts_error = packetHandler.WritePosEx(STS_ID_1, soll_pos1, 1000, 0)
+            if sts_comm_result != COMM_SUCCESS:
+                print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+            if sts_error != 0:
+                print("%s" % packetHandler.getRxPacketError(sts_error))
 
-                    soll_pos2 = int(get_servo2(args.angle2))
-                
-                    # Write STServo goal position/moving speed/moving acc
-                    sts_comm_result, sts_error = packetHandler.WritePosEx(STS_ID_2, soll_pos2, 500, 0)
-                    if sts_comm_result != COMM_SUCCESS:
-                        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
-                    if sts_error != 0:
-                        print("%s" % packetHandler.getRxPacketError(sts_error))
+            sts_comm_result, sts_error = packetHandler.WritePosEx(STS_ID_2, soll_pos2, 1000, 0)
+            if sts_comm_result != COMM_SUCCESS:
+                print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+            if sts_error != 0:
+                print("%s" % packetHandler.getRxPacketError(sts_error))
 
-                    print(f"servo1: {get_servo1(args.angle1)}, servo2_soll: {get_servo2(args.angle2)}, servo2_ist: {servo_position2}")
+            print(f"servo1_soll: {soll_pos1}, servo1_ist: {servo_position1}, servo2_soll: {soll_pos2}, servo2_ist: {servo_position2}")
 
     except KeyboardInterrupt:
         print("Program stopped")
 
     finally:
         ser.close()  # Close the serial connection when done
-        sts_comm_result, sts_error = packetHandler.WriteSpec(STS_ID, 0, 0)
-        if sts_comm_result != COMM_SUCCESS:
-            print("%s" % packetHandler.getTxRxResult(sts_comm_result))
-        if sts_error != 0:
-            print("%s" % packetHandler.getRxPacketError(sts_error))
         portHandler.closePort() # Close port
