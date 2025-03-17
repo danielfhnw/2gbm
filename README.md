@@ -6,7 +6,7 @@ Die Übungen sind im Wiki beschrieben und mit den folgenden Links erreichbar:
 - [Rückwärtstransformation](https://github.com/danielfhnw/2gbm/wiki/%C3%9Cbungen#r%C3%BCckw%C3%A4rtstransformation)
 - [Synchronisierte Bewegungen](https://github.com/danielfhnw/2gbm/wiki/%C3%9Cbungen#synchronisierte-bewegungen)
 
-Im folgenden wird die Installation beschrieben
+Im folgenden wird die Installation beschrieben.
 
 ## Installation 
 
