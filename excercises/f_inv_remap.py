@@ -75,12 +75,6 @@ if __name__ == "__main__":
         print("%s" % packetHandler.getTxRxResult(sts_comm_result))
     elif sts_error != 0:
         print("%s" % packetHandler.getRxPacketError(sts_error))  
-
-    sts_comm_result, sts_error = packetHandler.ServoMode(STS_ID_2)
-    if sts_comm_result != COMM_SUCCESS:
-        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
-    elif sts_error != 0:
-        print("%s" % packetHandler.getRxPacketError(sts_error))    
     
     sts_comm_result, sts_error = packetHandler.set_max_angle(STS_ID_1, 0)
     if sts_comm_result != COMM_SUCCESS:
@@ -100,19 +94,25 @@ if __name__ == "__main__":
     elif sts_error != 0:
         print("%s" % packetHandler.getRxPacketError(sts_error))
 
-        sts_comm_result, sts_error = packetHandler.set_max_angle(STS_ID_2, 0)
+    sts_comm_result, sts_error = packetHandler.ServoMode(STS_ID_2)
+    if sts_comm_result != COMM_SUCCESS:
+        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+    elif sts_error != 0:
+        print("%s" % packetHandler.getRxPacketError(sts_error))    
+
+    sts_comm_result, sts_error = packetHandler.set_multiturn(STS_ID_2)
+    if sts_comm_result != COMM_SUCCESS:
+        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+    elif sts_error != 0:
+        print("%s" % packetHandler.getRxPacketError(sts_error))
+
+    sts_comm_result, sts_error = packetHandler.set_max_angle(STS_ID_2, 0)
     if sts_comm_result != COMM_SUCCESS:
         print("%s" % packetHandler.getTxRxResult(sts_comm_result))
     elif sts_error != 0:
         print("%s" % packetHandler.getRxPacketError(sts_error))
 
     sts_comm_result, sts_error = packetHandler.set_min_angle(STS_ID_2, 0)
-    if sts_comm_result != COMM_SUCCESS:
-        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
-    elif sts_error != 0:
-        print("%s" % packetHandler.getRxPacketError(sts_error))
-
-    sts_comm_result, sts_error = packetHandler.set_multiturn(STS_ID_2)
     if sts_comm_result != COMM_SUCCESS:
         print("%s" % packetHandler.getTxRxResult(sts_comm_result))
     elif sts_error != 0:

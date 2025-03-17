@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
 
 def get_servo2(angle2):
-    if angle2 >= 0:
+    if angle2 > 0:
         return -32768 - (-angle2 * 4096 / (2 * np.pi))
     else:
         return (-angle2 * 4096 / (2 * np.pi))
@@ -29,8 +29,8 @@ def get_servo2(angle2):
 def get_servo1(angle1):
     if angle1 > 0 or angle1 < -np.pi:
         print("angle1 is out of range")
-        exit()
-    if angle1 >= 0:
+        return 0
+    if angle1 > 0:
         return -32768 - (-angle1 * 4096 / (2 * np.pi))
     else:
         return (-angle1 * 4096 / (2 * np.pi))
@@ -74,12 +74,6 @@ if __name__ == "__main__":
         print("%s" % packetHandler.getTxRxResult(sts_comm_result))
     elif sts_error != 0:
         print("%s" % packetHandler.getRxPacketError(sts_error))  
-
-    sts_comm_result, sts_error = packetHandler.ServoMode(STS_ID_2)
-    if sts_comm_result != COMM_SUCCESS:
-        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
-    elif sts_error != 0:
-        print("%s" % packetHandler.getRxPacketError(sts_error))    
     
     sts_comm_result, sts_error = packetHandler.set_max_angle(STS_ID_1, 0)
     if sts_comm_result != COMM_SUCCESS:
@@ -99,19 +93,25 @@ if __name__ == "__main__":
     elif sts_error != 0:
         print("%s" % packetHandler.getRxPacketError(sts_error))
 
-        sts_comm_result, sts_error = packetHandler.set_max_angle(STS_ID_2, 0)
+    sts_comm_result, sts_error = packetHandler.ServoMode(STS_ID_2)
+    if sts_comm_result != COMM_SUCCESS:
+        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+    elif sts_error != 0:
+        print("%s" % packetHandler.getRxPacketError(sts_error))    
+
+    sts_comm_result, sts_error = packetHandler.set_multiturn(STS_ID_2)
+    if sts_comm_result != COMM_SUCCESS:
+        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+    elif sts_error != 0:
+        print("%s" % packetHandler.getRxPacketError(sts_error))
+
+    sts_comm_result, sts_error = packetHandler.set_max_angle(STS_ID_2, 0)
     if sts_comm_result != COMM_SUCCESS:
         print("%s" % packetHandler.getTxRxResult(sts_comm_result))
     elif sts_error != 0:
         print("%s" % packetHandler.getRxPacketError(sts_error))
 
     sts_comm_result, sts_error = packetHandler.set_min_angle(STS_ID_2, 0)
-    if sts_comm_result != COMM_SUCCESS:
-        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
-    elif sts_error != 0:
-        print("%s" % packetHandler.getRxPacketError(sts_error))
-
-    sts_comm_result, sts_error = packetHandler.set_multiturn(STS_ID_2)
     if sts_comm_result != COMM_SUCCESS:
         print("%s" % packetHandler.getTxRxResult(sts_comm_result))
     elif sts_error != 0:
