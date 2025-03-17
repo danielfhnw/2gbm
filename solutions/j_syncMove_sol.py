@@ -8,8 +8,9 @@ current_dir = os.path.dirname(os.path.abspath(__file__))  # unit_test/
 parent_dir = os.path.abspath(os.path.join(current_dir, "..")) 
 sys.path.append(parent_dir)
 from STservo_sdk import *                 # Uses STServo SDK library
-from f_inv_remap import get_servo1, get_servo2
-from h_check_workspace import check_elbow_left
+from f_inv_remap_sol import get_servo1, get_servo2
+from h_check_workspace_sol import check_elbow_left
+from i_invKin_sol import inverse_kinematics
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="get x and y")
@@ -21,17 +22,20 @@ if __name__ == "__main__":
         quit()
 # ------------------------------------------------------------------------------------------------
 
-# TODO change code only inside the inverse_kinematics function
 
 
 
-def inverse_kinematics(x, y):  
-    # TODO implement inverse kinematics for both motors in coordinate system 1
-    theta2 = 0
-    theta1 = 0
-        
-    servo_pos = [get_servo1(theta1), get_servo2(theta2)]
-    return servo_pos
+
+def get_speeds(pos1, soll1, pos2, soll2):  
+    if soll1 < 0:
+        soll1 = -(soll1 + 32768)
+    speed1 = abs(soll1 - pos1)
+    if soll2 < 0:
+        soll2 = -(soll2 + 32768)
+    speed2 = abs(soll2 - pos2)
+    
+    speeds = [speed1, speed2]
+    return speeds
 
 
 
@@ -135,15 +139,19 @@ if __name__ == "__main__":
             soll_pos = inverse_kinematics(args.x, args.y)
             soll_pos1 = int(soll_pos[0])
             soll_pos2 = int(soll_pos[1])
+
+            speeds = get_speeds(servo_position1, soll_pos1, servo_position2, soll_pos2)
+            speed1 = int(speeds[0])
+            speed2 = int(speeds[1])
         
             # Write STServo goal position/moving speed/moving acc
-            sts_comm_result, sts_error = packetHandler.WritePosEx(STS_ID_1, soll_pos1, 500, 50)
+            sts_comm_result, sts_error = packetHandler.WritePosEx(STS_ID_1, soll_pos1, speed1, 50)
             if sts_comm_result != COMM_SUCCESS:
                 print("%s" % packetHandler.getTxRxResult(sts_comm_result))
             if sts_error != 0:
                 print("%s" % packetHandler.getRxPacketError(sts_error))
 
-            sts_comm_result, sts_error = packetHandler.WritePosEx(STS_ID_2, soll_pos2, 500, 50)
+            sts_comm_result, sts_error = packetHandler.WritePosEx(STS_ID_2, soll_pos2, speed2, 50)
             if sts_comm_result != COMM_SUCCESS:
                 print("%s" % packetHandler.getTxRxResult(sts_comm_result))
             if sts_error != 0:
