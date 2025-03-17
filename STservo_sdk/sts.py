@@ -128,20 +128,26 @@ class sts(protocol_packet_handler):
         return error
     
     def set_max_angle(self, sts_id, angle):
-        #self.unLockEprom(sts_id)
+        self.unLockEprom(sts_id)
         error = self.write2ByteTxRx(sts_id, STS_MAX_ANGLE_LIMIT_L, angle)
-        #self.LockEprom(sts_id)
+        self.LockEprom(sts_id)
         return error
     
     def set_min_angle(self, sts_id, angle):
-        #self.unLockEprom(sts_id)
+        self.unLockEprom(sts_id)
         error = self.write2ByteTxRx(sts_id, STS_MIN_ANGLE_LIMIT_L, angle)
-        #self.LockEprom(sts_id)
+        self.LockEprom(sts_id)
         return error
 
     def set_multiturn(self, sts_id):
-        #self.unLockEprom(sts_id)
+        self.unLockEprom(sts_id)
         error = self.write1ByteTxRx(sts_id, 18, 28)
-        #self.LockEprom(sts_id)
+        self.LockEprom(sts_id)
+        return error
+    
+    def reset_multiturn(self, sts_id):
+        self.unLockEprom(sts_id)
+        error = self.write1ByteTxRx(sts_id, 18, 12)
+        self.LockEprom(sts_id)
         return error
 
