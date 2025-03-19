@@ -102,7 +102,7 @@ if __name__ == "__main__":
                     if sts_error != 0:
                         print("%s" % packetHandler.getRxPacketError(sts_error))
 
-                    print(f"servo1: {get_servo1(args.x)}, servo2: {get_servo2(args.y)}")
+                    print(f"servo1: {servo_position1}, servo2: {servo_position2}")
 
     except KeyboardInterrupt:
         print("Program stopped")
