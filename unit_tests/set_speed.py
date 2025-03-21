@@ -32,7 +32,7 @@ if __name__ == "__main__":
         print("Failed to change the baudrate")
         quit()
 
-    sts_comm_result, sts_error = packetHandler.WheelModeMode(1)
+    sts_comm_result, sts_error = packetHandler.WheelMode(1)
     if sts_comm_result != COMM_SUCCESS:
         print("%s" % packetHandler.getTxRxResult(sts_comm_result))
     elif sts_error != 0:
