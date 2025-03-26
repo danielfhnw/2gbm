@@ -28,6 +28,8 @@ if __name__ == "__main__":
 
 def get_speeds(pos1, soll1, pos2, soll2):  
     # TODO set the speeds to get a synchronized movement
+    # INFO speed can always be positive
+    # INFO speed is in inc/s and pos and soll is in inc
     speed1 = 500
     speed2 = 500
         
