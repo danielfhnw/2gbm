@@ -1,10 +1,12 @@
 import sys
 import os
 import json
+import numpy as np
 current_dir = os.path.dirname(os.path.abspath(__file__))  # unit_test/
 parent_dir = os.path.abspath(os.path.join(current_dir, "..")) 
 sys.path.append(parent_dir)
 from STservo_sdk import *                 # Uses STServo SDK library
+from d_forwKin_sol_servo import forward_kinematics
 from h_check_workspace_sol import check_elbow_left
 from i_invKin_sol import inverse_kinematics
 from j_syncMove_sol import get_speeds
@@ -37,13 +39,25 @@ def moveP2P(points):
             speed2 = int(speeds[1])
             P2P_utils.write_servo_pos(1, soll_pos1, speed1)
             P2P_utils.write_servo_pos(2, soll_pos2, speed2)
-            time.sleep(2)
+            while verschleifen(x, y):
+                pass
+            #time.sleep(2)
             print("Point reached")
         else:
             print("Point is not in elbow left workspace")
 
     
-    
+def verschleifen(x_target, y_target):
+    servo_pos1 = P2P_utils.read_servo_pos(1)
+    servo_pos2 = P2P_utils.read_servo_pos(2)
+
+    T = forward_kinematics(servo_pos1, servo_pos2)
+    x = int(T[0])
+    y = int(T[1])
+
+    dist = np.sqrt((x_target - x)**2 + (y_target - y)**2)
+    return dist > 3 #  mm tolerance
+
 
 
 # ------------------------------------------------------------------------------------------------

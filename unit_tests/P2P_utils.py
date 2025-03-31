@@ -10,6 +10,12 @@ from STservo_sdk import *                 # Uses STServo SDK library
 def init_multiturn():
     global portHandler
     global packetHandler
+
+    global SERVO_POS_1
+    global SERVO_POS_2
+    global SERVO_OFFSET_1
+    global SERVO_OFFSET_2
+
     load_dotenv()
     com_port_motor = os.getenv("COM_PORT_MOTOR")
     portHandler = PortHandler(com_port_motor)
@@ -85,17 +91,47 @@ def init_multiturn():
     elif sts_error != 0:
         print("%s" % packetHandler.getRxPacketError(sts_error))  
 
+    SERVO_OFFSET_1 = 0
+    SERVO_OFFSET_2 = 4096
+    SERVO_POS_1 = read_servo_pos(1)
+    if SERVO_POS_1 > 3500:
+        SERVO_OFFSET_1 = 4096
+        SERVO_POS_1 = read_servo_pos(1)
+    SERVO_POS_2 = read_servo_pos(2)
+    print("Servo 1 Startposition: ", SERVO_POS_1)
+    print("Servo 2 Startposition: ", SERVO_POS_2)
+    
+
 def read_servo_pos(id):
     servo_position, servo_speed, sts_comm_result, sts_error = packetHandler.ReadPosSpeed(id)
     if sts_comm_result != COMM_SUCCESS:
         print(packetHandler.getTxRxResult(sts_comm_result))
     if sts_error != 0:
         print(packetHandler.getRxPacketError(sts_error))
+    if id == 1:
+        servo_position = servo_position - SERVO_OFFSET_1
+    if id == 2:
+        servo_position = servo_position - SERVO_OFFSET_2
     return servo_position
 
 def write_servo_pos(id, pos, speed):
-    sts_comm_result, sts_error = packetHandler.WritePosEx(id, pos, speed, 50)
+    # print(" before writing to Servo %d Position: %d" % (id, pos))
+    
+    if pos < 0:
+        pos = -(pos + 32768)
+
+    if id == 1:
+        pos = pos + SERVO_OFFSET_1
+    if id == 2:
+        pos = pos + SERVO_OFFSET_2
+
+    if pos < 0:
+         pos = -32768 + pos
+
+    sts_comm_result, sts_error = packetHandler.WritePosEx(id, pos, speed, 255)
     if sts_comm_result != COMM_SUCCESS:
         print("%s" % packetHandler.getTxRxResult(sts_comm_result))
     if sts_error != 0:
         print("%s" % packetHandler.getRxPacketError(sts_error))
+
+    # print("writing to Servo %d Position: %d" % (id, pos))

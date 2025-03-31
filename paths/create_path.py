@@ -1,8 +1,4 @@
 import json
-import os
-current_dir = os.path.dirname(os.path.abspath(__file__))  # unit_test/
-parent_dir = os.path.abspath(os.path.join(current_dir, "..")) 
-filepath = os.path.join(parent_dir, "paths/points.json")
 
 points = [
     {"x": 0, "y": 0},
@@ -17,5 +13,18 @@ points = [
     {"x": 0, "y": 0}
 ]
 
-with open(filepath, "w") as f:
+points = [
+    {"x": 60, "y": 60},
+    {"x": 90, "y": 60},
+    {"x": 90, "y": 90},
+    {"x": 75, "y": 105},
+    {"x": 60, "y": 90},
+    {"x": 60, "y": 60},
+    {"x": 90, "y": 90},
+    {"x": 60, "y": 90},
+    {"x": 90, "y": 60}
+]
+
+
+with open("paths/points.json", "w") as f:
     json.dump(points, f, indent=4)  # Pretty print with indentation

@@ -7,43 +7,21 @@ current_dir = os.path.dirname(os.path.abspath(__file__))  # unit_test/
 parent_dir = os.path.abspath(os.path.join(current_dir, "..")) 
 sys.path.append(parent_dir)
 from STservo_sdk import *                 # Uses STServo SDK library
-from solutions.a_remap_sol import get_angle1, get_angle2
 # ------------------------------------------------------------------------------------------------
 
 
 
 
 
-def forward_kinematics(servo_position1, servo_position2):
-    theta1 = get_angle1(servo_position1)
-    theta2 = get_angle2(servo_position2)
-    T54 = np.array([
-        [1, 0, 0, 75],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [0, 0, 0, 1]
-    ])
-    T43 = np.array([
-        [np.cos(theta2), -np.sin(theta2), 0, 0],
-        [np.sin(theta2),  np.cos(theta2), 0, 0],
-        [0, 0, 1, 0],
-        [0, 0, 0, 1]
-    ])
-    T32 = np.array([
-        [1, 0, 0, -75],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [0, 0, 0, 1]
-    ])
-    T21 = np.array([
-        [np.cos(theta1), -np.sin(theta1), 0, 0],
-        [np.sin(theta1),  np.cos(theta1), 0, 0],
-        [0, 0, 1, 0],
-        [0, 0, 0, 1]
-    ])
-    p = np.array([0, 0, 0, 1])
-    p = T21 @ T32 @ T43 @ T54 @ p
-    return p
+def get_angle2(servo_position2):
+    offset2 = 0
+    theta2 = (-servo_position2 + offset2) / 4096 * 2 * np.pi
+    return theta2
+
+def get_angle1(servo_position1):
+    offset1 = 0
+    theta1 = (-servo_position1 + offset1) / 4096 * 2 * np.pi
+    return theta1
 
 
 
@@ -114,7 +92,6 @@ if __name__ == "__main__":
                         print(packetHandler.getTxRxResult(sts_comm_result))
                     if sts_error != 0:
                         print(packetHandler.getRxPacketError(sts_error))
-                    coords = forward_kinematics(servo_position1, servo_position2)
                 
                     # Write STServo goal position/moving speed/moving acc
                     sts_comm_result, sts_error = packetHandler.WriteSpec(STS_ID_1, speed1, 0)
@@ -128,7 +105,7 @@ if __name__ == "__main__":
                     if sts_error != 0:
                         print("%s" % packetHandler.getRxPacketError(sts_error))
 
-                    print(f"x: {coords[0]}, y: {coords[1]}")
+                    print(f"angle1: {get_angle1(servo_position1)}, angle2: {get_angle2(servo_position2)}")
 
     except KeyboardInterrupt:
         print("Program stopped")

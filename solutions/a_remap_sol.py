@@ -14,7 +14,7 @@ from STservo_sdk import *                 # Uses STServo SDK library
 
 
 def get_angle2(servo_position2):
-    offset2 = 3710
+    offset2 = 1670
     theta2 = (-servo_position2 + offset2) / 4096 * 2 * np.pi
     return theta2
 
