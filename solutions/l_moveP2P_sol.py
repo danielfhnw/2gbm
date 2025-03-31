@@ -12,6 +12,7 @@ from i_invKin_sol import inverse_kinematics
 from j_syncMove_sol import get_speeds
 from k_syncMove_sol import adjust_speeds
 import unit_tests.P2P_utils as P2P_utils
+import unit_tests.gripper as gripper
 filepath = os.path.join(parent_dir, "paths/points.json")
 
 def read_points():
@@ -39,6 +40,8 @@ def moveP2P(points):
             speed2 = int(speeds[1])
             P2P_utils.write_servo_pos(1, soll_pos1, speed1)
             P2P_utils.write_servo_pos(2, soll_pos2, speed2)
+            if "gripper" in point:
+                gripper.grip(P2P_utils.portHandler, int(point["gripper"]))
             while verschleifen(x, y):
                 pass
             #time.sleep(2)

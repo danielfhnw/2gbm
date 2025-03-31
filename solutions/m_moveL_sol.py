@@ -11,6 +11,7 @@ from j_syncMove_sol import get_speeds
 from k_syncMove_sol import adjust_speeds
 from l_moveP2P_sol import moveP2P, verschleifen
 import unit_tests.P2P_utils as P2P_utils
+import unit_tests.gripper as gripper
 filepath = os.path.join(parent_dir, "paths/points.json")
 
 def read_points():
@@ -30,7 +31,7 @@ def moveL(points):
     for point in points:
         x = int(point["x"])
         y = int(point["y"])
-        if x != x_old or y != y_old:
+        if x != x_old or y != y_old or "gripper" in point:
             if check_elbow_left(x, y):
                 print("Moving to point: ", x, y)
                 rx = x - x_old
@@ -47,6 +48,8 @@ def moveL(points):
                     speed2 = int(speeds[1])
                     P2P_utils.write_servo_pos(1, soll_pos1, speed1)
                     P2P_utils.write_servo_pos(2, soll_pos2, speed2)
+                    if "gripper" in point:
+                        gripper.grip(P2P_utils.portHandler, int(point["gripper"]))
                     while verschleifen(x_interp, y_interp):
                         pass
                     #time.sleep(1.5/n)
