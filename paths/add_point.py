@@ -5,7 +5,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))  # unit_test/
 parent_dir = os.path.abspath(os.path.join(current_dir, "..")) 
 sys.path.append(parent_dir)
 from solutions.d_forwKin_sol import forward_kinematics
-from unit_tests.Wheel_utils import init, read_servo_pos
+from unit_tests.Wheel_utils import init, read_servo_pos, change_hold
 
 def add_point():
     if not os.path.exists("paths/points.json"):
@@ -26,3 +26,4 @@ def add_point():
 if __name__ == "__main__":
     init()
     add_point()
+    change_hold(0)

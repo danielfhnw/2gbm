@@ -59,7 +59,7 @@ def verschleifen(x_target, y_target):
     y = int(T[1])
 
     dist = np.sqrt((x_target - x)**2 + (y_target - y)**2)
-    return dist > 3 #  mm tolerance
+    return dist > 5 #  mm tolerance
 
 
 

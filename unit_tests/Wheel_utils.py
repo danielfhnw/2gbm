@@ -77,3 +77,16 @@ def write_servo_speed(id, speed):
         print("%s" % packetHandler.getTxRxResult(sts_comm_result))
     if sts_error != 0:
         print("%s" % packetHandler.getRxPacketError(sts_error))
+
+def change_hold(hold):
+    sts_comm_result, sts_error = packetHandler.change_hold(1, hold)
+    if sts_comm_result != COMM_SUCCESS:
+        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+    elif sts_error != 0:
+        print("%s" % packetHandler.getRxPacketError(sts_error))
+    sts_comm_result, sts_error = packetHandler.change_hold(2, hold)
+    if sts_comm_result != COMM_SUCCESS:
+        print("%s" % packetHandler.getTxRxResult(sts_comm_result))
+    elif sts_error != 0:
+        print("%s" % packetHandler.getRxPacketError(sts_error))
+    print("hold: %s" % hold)
