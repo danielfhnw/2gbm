@@ -17,7 +17,13 @@ def check_id(id):
         return False
 
 parser = argparse.ArgumentParser(description="Check if the ID is within range (1-20).")
-parser.add_argument("id", type=int, help="First ID (1-20)")
+parser.add_argument(
+    "id",
+    type=int,
+    nargs="?",          # makes it optional
+    default=2,          # default value if not provided
+    help="Servo ID (1-20), default is 2"
+)
 args = parser.parse_args()
 
 if check_id(args.id):
