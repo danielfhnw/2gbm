@@ -15,7 +15,7 @@ Im folgenden wird die Installation beschrieben.
 - [Python](https://www.python.org/downloads/)
 - [Python IDE](https://code.visualstudio.com/download)
 - [Git](https://git-scm.com/downloads)
-- [Arduino Nano Treiber](https://www.makershop.de/ch340-341-usb-installieren/)
+- [Arduino Nano Treiber](https://download.bastelgarage.ch/?dir=.%2FCH340Treiber)
 
 ### Repository
 Der Ordner mit allen Unterlagen kann mit folgendem Codezeilenbefehl kopiert werden.
