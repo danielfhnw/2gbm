@@ -11,7 +11,7 @@ Im folgenden wird die Installation beschrieben.
 
 ## Installation 
 
-### Voraussetungen
+### Voraussetungen (falls nicht bereits installiert)
 - [Python](https://www.python.org/downloads/)
 - [Python IDE](https://code.visualstudio.com/download)
 - [Git](https://git-scm.com/downloads)
