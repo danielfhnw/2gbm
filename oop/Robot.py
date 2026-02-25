@@ -55,7 +55,7 @@ class Robot:
         # TODO implement forward kinematics
 
 
-        return 0, 0
+        return [0, 0, 0, 1]
     
     def print_tcp_position(self):
         p = self.get_tcp_position()
