@@ -1,6 +1,7 @@
 from Motor import Motor
 import sys
 import os
+import numpy as np
 from dotenv import load_dotenv
 current_dir = os.path.dirname(os.path.abspath(__file__))  # oop/
 parent_dir = os.path.abspath(os.path.join(current_dir, "..")) 
@@ -51,10 +52,41 @@ class Robot:
         print(f"\rMotor_1: {pos1:<6} | Motor_2: {pos2:<6}", end="", flush=True)
 
     def get_tcp_position(self):
-        # TODO implement forward kinematics
-
-
-        return 0, 0
+        theta1, theta2 = self.get_motor_positions()
+        T54 = np.array([
+            [1, 0, 0, 75],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1]
+        ])
+        T43 = np.array([
+            [np.cos(theta2), -np.sin(theta2), 0, 0],
+            [np.sin(theta2),  np.cos(theta2), 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1]
+        ])
+        T32 = np.array([
+            [1, 0, 0, -75],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1]
+        ])
+        T21 = np.array([
+            [np.cos(theta1), -np.sin(theta1), 0, 0],
+            [np.sin(theta1),  np.cos(theta1), 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1]
+        ])
+        T10 = np.array([
+            [1, 0, 0, 0],
+            [0, 1, 0, 66],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1]
+        ])
+        p = np.array([0, 0, 0, 1])
+        p = T10 @ T21 @ T32 @ T43 @ T54 @ p
+        
+        return p[0], p[1]
     
     def print_tcp_position(self):
         x, y = self.get_tcp_position()

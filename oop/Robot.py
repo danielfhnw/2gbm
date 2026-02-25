@@ -1,6 +1,7 @@
 from Motor import Motor
 import sys
 import os
+import numpy as np
 from dotenv import load_dotenv
 current_dir = os.path.dirname(os.path.abspath(__file__))  # oop/
 parent_dir = os.path.abspath(os.path.join(current_dir, "..")) 
