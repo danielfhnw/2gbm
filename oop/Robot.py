@@ -53,6 +53,8 @@ class Robot:
 
     def get_tcp_position(self):
         # TODO implement forward kinematics
+        # INFO: link lengths are 75mm and 75mm
+        # output is tcp position in homogeneous coordinates in mm
 
 
         return [0, 0, 0, 1]
