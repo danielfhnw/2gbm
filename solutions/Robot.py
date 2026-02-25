@@ -85,9 +85,10 @@ class Robot:
         ])
         p = np.array([0, 0, 0, 1])
         p = T10 @ T21 @ T32 @ T43 @ T54 @ p
-        
-        return p[0], p[1]
+
+        return p
     
     def print_tcp_position(self):
-        x, y = self.get_tcp_position()
+        p = self.get_tcp_position()
+        x, y = p[0], p[1]
         print(f"\rTCP position: x={x:<6} | y={y:<6}", end="", flush=True)

@@ -58,5 +58,6 @@ class Robot:
         return 0, 0
     
     def print_tcp_position(self):
-        x, y = self.get_tcp_position()
+        p = self.get_tcp_position()
+        x, y = p[0], p[1]
         print(f"\rTCP position: x={x:<6} | y={y:<6}", end="", flush=True)
