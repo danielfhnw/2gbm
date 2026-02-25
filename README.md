@@ -53,5 +53,7 @@ Diese Datei muss mit folgendem Inhalt gefüllt werden.
 ```
 COM_PORT_NANO=COM3
 COM_PORT_MOTOR=COM4
+OFFSET_SERVO_1=0
+OFFSET_SERVO_2=0
 ```
 Dabei muss der COM-Port für den Nano und das Motorboard entsprechend angepasst werden.
