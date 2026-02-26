@@ -40,7 +40,7 @@ Um die nötigen Bibliotheken in das virtuelle Environement zu laden muss es zuer
 Sobald das Environement aktiviert ist erscheint `(.venv)` vor dem Pfad.
 Anschliessend müssen die nötigen Bibliotheken heruntergeladen werden. Dazu wird der folgende Befehl verwendet.
 ```
-pip install -r requirements.txt
+pip install .
 ```
 Sobald alles erfolgreich installiert wurde, ist das virtuelle Environement bereit.
 
