@@ -30,3 +30,12 @@ class Motor:
     def get_speed(self):
         _, speed, _, _ = self.packet_handler.ReadPosSpeed(self.id)
         return speed
+    
+    def set_position(self, position):
+        position_raw = int(-position * 4096 / (2 * 3.141592653589793) + 4096 - self.offset)
+        self.set_position_raw(position_raw)
+
+    def set_position_raw(self, position):
+        if position < 0:
+            position = -32768 - position
+        self.packet_handler.WritePosEx(self.id, position, 1000, 0)

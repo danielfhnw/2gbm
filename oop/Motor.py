@@ -32,3 +32,18 @@ class Motor:
     def get_speed(self):
         _, speed, _, _ = self.packet_handler.ReadPosSpeed(self.id)
         return speed
+    
+    def set_position(self, position):
+        # TODO implement position setting
+        # INFO motor position is in range 0-4096
+        # input is in radians
+        # output is in motor units
+        # zero position is defined in wiki
+        
+        return 0 # TODO remove this line to test the function
+        self.set_position_raw(position_raw)
+
+    def set_position_raw(self, position):
+        if position < 0:
+            position = -32768 - position
+        self.packet_handler.WritePosEx(self.id, position, 1000, 0)
