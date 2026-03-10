@@ -88,6 +88,10 @@ class Robot:
 
         return p
     
+    def set_tcp_position(self, tcp_position):
+        theta2 = np.arctan(tcp_position[1] / tcp_position[0])
+        self.motor_2.set_position(theta2)       
+    
     def print_tcp_position(self):
         p = self.get_tcp_position()
         x, y = p[0], p[1]

@@ -59,6 +59,14 @@ class Robot:
 
         return [0, 0, 0, 1]
     
+    def set_tcp_position(self, tcp_position):
+        # TODO implement inverse kinematics
+        # INFO: link lengths are 75mm and 75mm
+        # input is tcp position homogeneous coordinates in mm
+        
+        
+        pass
+    
     def print_tcp_position(self):
         p = self.get_tcp_position()
         x, y = p[0], p[1]
