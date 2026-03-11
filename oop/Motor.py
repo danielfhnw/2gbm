@@ -35,8 +35,8 @@ class Motor:
     
     def set_position(self, position):
         # TODO implement position setting
-        # output is in radians
-        # input is in motor units
+        # input is in radians
+        # output is in motor units
         
         
         return 0 # TODO remove this line to test the function
