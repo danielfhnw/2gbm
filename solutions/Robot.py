@@ -91,6 +91,31 @@ class Robot:
     def set_tcp_position(self, tcp_position):
         theta2 = np.arctan(tcp_position[1] / tcp_position[0])
         self.motor_2.set_position(theta2)       
+
+    def check_workspace(self, tcp_position, elbow_left=True):
+        x, y = tcp_position[0], tcp_position[1]
+        y = y - 66 # differenz zum joystick
+        r = 75
+        if elbow_left:
+            if (x + r) ** 2 + y ** 2 < r ** 2:
+                return False
+            if (x - r) ** 2 + y ** 2 <= r ** 2:
+                return True
+            if y < 0:
+                return False
+            if x ** 2 + y ** 2 <= (2 * r) ** 2:
+                return True
+            return False
+        else:
+            if (x + r) ** 2 + y ** 2 <= r ** 2:
+                return True
+            if (x - r) ** 2 + y ** 2 < r ** 2:
+                return False
+            if y < 0:
+                return False
+            if x ** 2 + y ** 2 <= (2 * r) ** 2:
+                return True
+            return False
     
     def print_tcp_position(self):
         p = self.get_tcp_position()

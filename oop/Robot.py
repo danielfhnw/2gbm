@@ -66,6 +66,20 @@ class Robot:
         
         
         pass
+
+
+    def check_workspace(self, tcp_position, elbow_left=True):
+        x, y = tcp_position[0], tcp_position[1]
+        y = y - 66 # differenz zum joystick
+        r = 75
+        if elbow_left:
+            # TODO implement check for left elbow configuration
+
+            return False
+        else:
+            # TODO implement check for right elbow configuration
+            
+            return False
     
     def print_tcp_position(self):
         p = self.get_tcp_position()
