@@ -20,10 +20,6 @@ class Motor:
         return position - 4096 + self.offset 
     
     def get_position(self):
-        # TODO implement position calculation
-        # INFO motor position is in range 0-4096
-        # output is in radians
-        # zero position is defined in wiki
         position_raw = self.get_position_raw()
         return -position_raw * 2 * 3.141592653589793 / 4096
     

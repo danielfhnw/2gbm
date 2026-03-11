@@ -89,8 +89,20 @@ class Robot:
         return p
     
     def set_tcp_position(self, tcp_position):
-        theta2 = np.arctan(tcp_position[1] / tcp_position[0])
-        self.motor_2.set_position(theta2)       
+        # solution for startexercise, not for general case
+        # theta2 = np.arctan(tcp_position[1] / tcp_position[0])
+        # self.motor_2.set_position(theta2)       
+
+        x = tcp_position[0]
+        y = tcp_position[1]
+
+        y = y - 66 # differenz zum joystick
+
+        theta2 = np.arccos((75**2 + 75**2 - (x**2 + y**2)) / (2*75*75))
+        theta1 = -np.pi/2 + np.arctan2(y,x) - theta2/2
+
+        self.motor_1.set_position(theta1)
+        self.motor_2.set_position(theta2)
 
     def check_workspace(self, tcp_position, elbow_left=True):
         x, y = tcp_position[0], tcp_position[1]
