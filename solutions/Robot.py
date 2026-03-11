@@ -91,7 +91,11 @@ class Robot:
     def set_tcp_position(self, tcp_position):
         # solution for startexercise, not for general case
         # theta2 = np.arctan(tcp_position[1] / tcp_position[0])
-        # self.motor_2.set_position(theta2)       
+        # self.motor_2.set_position(theta2)   
+        # return True    
+
+        if not self.check_workspace(tcp_position, elbow_left=True):
+            return False
 
         x = tcp_position[0]
         y = tcp_position[1]
@@ -103,6 +107,7 @@ class Robot:
 
         self.motor_1.set_position(theta1)
         self.motor_2.set_position(theta2)
+        return True
 
     def check_workspace(self, tcp_position, elbow_left=True):
         x, y = tcp_position[0], tcp_position[1]

@@ -65,7 +65,7 @@ class Robot:
         # input is tcp position homogeneous coordinates in mm
         
         
-        pass
+        return False
 
 
     def check_workspace(self, tcp_position, elbow_left=True):
@@ -78,7 +78,7 @@ class Robot:
             return False
         else:
             # TODO implement check for right elbow configuration
-            
+
             return False
     
     def print_tcp_position(self):
