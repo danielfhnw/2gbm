@@ -35,10 +35,9 @@ class Motor:
     
     def set_position(self, position):
         # TODO implement position setting
-        # INFO motor position is in range 0-4096
-        # input is in radians
-        # output is in motor units
-        # zero position is defined in wiki
+        # output is in radians
+        # input is in motor units
+        
         
         return 0 # TODO remove this line to test the function
         self.set_position_raw(position_raw)
