@@ -92,3 +92,18 @@ class Robot:
         p = self.get_tcp_position()
         x, y = p[0], p[1]
         print(f"\rTCP position: x={x:<6} | y={y:<6}", end="", flush=True)
+
+    def move_l(self, target_position, speed=1000, tolerance=5, step_size=10):
+        ist_position = self.get_tcp_position()
+
+        if not self.check_workspace(target_position, elbow_left=True):
+            return False
+
+        if np.linalg.norm(np.array(target_position) - np.array(ist_position)) >= tolerance:
+            if np.linalg.norm(np.array(target_position) - np.array(ist_position)) < step_size:
+                self.set_tcp_position(target_position)
+            else:
+                # TODO implement linear movement towards target position with defined step size
+
+                pass
+        return True
