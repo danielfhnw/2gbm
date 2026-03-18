@@ -15,13 +15,14 @@ if __name__ == "__main__":
 
     try:
         x, y = map(float, input("set tcp position (x y): ").split())
-        
+        start_position = robot.get_tcp_position()
+        result = robot.move_l([x, y, 0, 1], start_position=start_position)
+        if not result:
+            print()
+            print("Failed to set TCP position. TCP position may be out of reach.")
+            stop_requested = True
         while not stop_requested:
-            result = robot.move_l([x, y, 0, 1])
-            if not result:
-                print()
-                print("Failed to set TCP position. TCP position may be out of reach.")
-                break
+            robot.move()
             robot.print_tcp_position()
     finally:
         print()

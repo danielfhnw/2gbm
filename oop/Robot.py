@@ -94,17 +94,25 @@ class Robot:
         x, y = p[0], p[1]
         print(f"\rTCP position: x={x:<6} | y={y:<6}", end="", flush=True)
 
-    def move_l(self, target_position, speed=1000, tolerance=5, step_size=10):
-        ist_position = self.get_tcp_position()
-
+    def move_l(self, target_position, start_position, step_size=5):
         if not self.check_workspace(target_position, elbow_left=True):
             return False
+        
+        distance = np.linalg.norm(np.array(target_position) - np.array(start_position))
+        if distance < step_size:
+                self.path.append(target_position)
+                return True
+        else:
+            # TODO implement path planning for linear movement from start_position to target_position with given step_size
+            
 
-        if np.linalg.norm(np.array(target_position) - np.array(ist_position)) >= tolerance:
-            if np.linalg.norm(np.array(target_position) - np.array(ist_position)) < step_size:
-                self.set_tcp_position(target_position)
+            return True
+    
+    def move(self, tolerance=2):
+        if self.path:
+            target_position = self.path[-1]
+            current_position = self.get_tcp_position()
+            if np.linalg.norm(np.array(target_position) - np.array(current_position)) < tolerance:
+                self.path.pop(0)
             else:
-                # TODO implement linear movement towards target position with defined step size
-
-                pass
-        return True
+                self.set_tcp_position(target_position)

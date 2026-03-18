@@ -33,6 +33,8 @@ class Robot:
         offset_servo2 = os.getenv("OFFSET_SERVO_2")
         self.motor_2 = Motor(2, int(offset_servo2) if offset_servo2 else 0, self.packet_handler)
 
+        self.path = []
+
     def shutdown(self):
         self.motor_1.shutdown()
         self.motor_2.shutdown()
@@ -156,19 +158,30 @@ class Robot:
         x, y = p[0], p[1]
         print(f"\rTCP position: x={x:<6} | y={y:<6}", end="", flush=True)
 
-    def move_l(self, target_position, speed=1000, tolerance=5, step_size=10):
-        ist_position = self.get_tcp_position()
-
+    def move_l(self, target_position, start_position, step_size=5):
         if not self.check_workspace(target_position, elbow_left=True):
             return False
-
-        if np.linalg.norm(np.array(target_position) - np.array(ist_position)) >= tolerance:
-            if np.linalg.norm(np.array(target_position) - np.array(ist_position)) < step_size:
-                self.set_tcp_position(target_position)
-            else:
-                direction = (np.array(target_position) - np.array(ist_position)) / np.linalg.norm(np.array(target_position) - np.array(ist_position))
-                intermediate_position = ist_position + direction * step_size
+        
+        distance = np.linalg.norm(np.array(target_position) - np.array(start_position))
+        if distance < step_size:
+                self.path.append(target_position)
+                return True
+        else:
+            step_count = int(np.floor(distance / step_size))
+            direction = (np.array(target_position) - np.array(start_position)) / step_count
+            for i in range(1, step_count):
+                intermediate_position = start_position + direction * i
+                self.path.append((start_position + direction * i).tolist())
                 if not self.check_workspace(intermediate_position, elbow_left=True):
                     return False
-                self.set_tcp_position(intermediate_position)
-        return True
+            self.path.append(target_position)
+            return True
+    
+    def move(self, tolerance=2):
+        if self.path:
+            target_position = self.path[-1]
+            current_position = self.get_tcp_position()
+            if np.linalg.norm(np.array(target_position) - np.array(current_position)) < tolerance:
+                self.path.pop(0)
+            else:
+                self.set_tcp_position(target_position)
