@@ -64,9 +64,16 @@ class Robot:
         # INFO: link lengths are 75mm and 75mm
         # input is tcp position homogeneous coordinates in mm
         
+        theta1 = 0 # TODO replace with calculated angle
+        theta2 = 0 # TODO replace with calculated angle
+        
+        self.move_sync(theta1, theta2)
+
+    def move_sync(self, theta1_soll, theta2_soll, speed=1000):
+        # TODO implement synchronous movement of both motors
+        # input is target angles in radians and speed in motor units
         
         return False
-
 
     def check_workspace(self, tcp_position, elbow_left=True):
         x, y = tcp_position[0], tcp_position[1]

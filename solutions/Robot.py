@@ -105,9 +105,25 @@ class Robot:
         theta2 = np.arccos((75**2 + 75**2 - (x**2 + y**2)) / (2*75*75))
         theta1 = -np.pi/2 + np.arctan2(y,x) - theta2/2
 
-        self.motor_1.set_position(theta1)
-        self.motor_2.set_position(theta2)
+        self.move_sync(theta1, theta2)
         return True
+    
+    def move_sync(self, theta1_soll, theta2_soll, speed=1000):
+        theta1_ist = self.motor_1.get_position()
+        theta2_ist = self.motor_2.get_position()
+
+        theta1_diff = abs(theta1_soll - theta1_ist)
+        theta2_diff = abs(theta2_soll - theta2_ist)
+
+        if theta1_diff > theta2_diff:
+            speed1 = speed
+            speed2 = speed * theta2_diff / theta1_diff
+        else:
+            speed2 = speed
+            speed1 = speed * theta1_diff / theta2_diff
+
+        self.motor_1.set_position(theta1_soll, speed1)
+        self.motor_2.set_position(theta2_soll, speed2)
 
     def check_workspace(self, tcp_position, elbow_left=True):
         x, y = tcp_position[0], tcp_position[1]
@@ -138,3 +154,18 @@ class Robot:
         p = self.get_tcp_position()
         x, y = p[0], p[1]
         print(f"\rTCP position: x={x:<6} | y={y:<6}", end="", flush=True)
+
+    def move_l(self, target_position, speed=1000, tolerance=5, step_size=10):
+        ist_position = self.get_tcp_position()
+
+        if not self.check_workspace(target_position, elbow_left=True):
+            return False
+
+        if np.linalg.norm(np.array(target_position) - np.array(ist_position)) >= tolerance:
+            if np.linalg.norm(np.array(target_position) - np.array(ist_position)) < step_size:
+                self.set_tcp_position(target_position)
+            else:
+                direction = (np.array(target_position) - np.array(ist_position)) / np.linalg.norm(np.array(target_position) - np.array(ist_position))
+                intermediate_position = ist_position + direction * step_size
+                self.set_tcp_position(intermediate_position)
+        return True

@@ -34,4 +34,4 @@ class Motor:
     def set_position_raw(self, position, speed=1000):
         if position < 0:
             position = -32768 - position
-        self.packet_handler.WritePosEx(self.id, position, speed, 0)
+        self.packet_handler.WritePosEx(self.id, position, int(speed), 0)
