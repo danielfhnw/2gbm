@@ -33,6 +33,8 @@ class Robot:
         offset_servo2 = os.getenv("OFFSET_SERVO_2")
         self.motor_2 = Motor(2, int(offset_servo2) if offset_servo2 else 0, self.packet_handler)
 
+        self.path = []
+
     def shutdown(self):
         self.motor_1.shutdown()
         self.motor_2.shutdown()
