@@ -105,12 +105,13 @@ class Robot:
         else:
             # TODO implement path planning for linear movement from start_position to target_position with given step_size
             
-
+                
+            self.path.append(target_position)
             return True
     
     def move(self, tolerance=2):
         if self.path:
-            target_position = self.path[-1]
+            target_position = self.path[0]
             current_position = self.get_tcp_position()
             if np.linalg.norm(np.array(target_position) - np.array(current_position)) < tolerance:
                 self.path.pop(0)
