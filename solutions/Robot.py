@@ -179,7 +179,7 @@ class Robot:
     
     def move(self, tolerance=2):
         if self.path:
-            target_position = self.path[-1]
+            target_position = self.path[0]
             current_position = self.get_tcp_position()
             if np.linalg.norm(np.array(target_position) - np.array(current_position)) < tolerance:
                 self.path.pop(0)

@@ -17,6 +17,7 @@ if __name__ == "__main__":
         x, y = map(float, input("set tcp position (x y): ").split())
         start_position = robot.get_tcp_position()
         result = robot.move_l([x, y, 0, 1], start_position=start_position)
+        #result = robot.move_l([0, 66, 0, 1], start_position=[x, y, 0, 1])
         if not result:
             print()
             print("Failed to set TCP position. TCP position may be out of reach.")
