@@ -167,9 +167,9 @@ class Robot:
                 self.path.append(target_position)
                 return True
         else:
-            step_count = int(np.floor(distance / step_size))
+            step_count = distance / step_size
             direction = (np.array(target_position) - np.array(start_position)) / step_count
-            for i in range(1, step_count):
+            for i in range(1, int(np.floor(step_count))):
                 intermediate_position = start_position + direction * i
                 self.path.append((start_position + direction * i).tolist())
                 if not self.check_workspace(intermediate_position, elbow_left=True):
