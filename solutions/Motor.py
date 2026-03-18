@@ -12,8 +12,7 @@ class Motor:
         
 
     def shutdown(self):
-        # TODO implement shutdown procedure
-        pass
+        self.packet_handler.change_hold(self.id, 0)
 
     def get_position_raw(self):
         position, _, _, _ = self.packet_handler.ReadPosSpeed(self.id)

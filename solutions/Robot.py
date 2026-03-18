@@ -167,5 +167,7 @@ class Robot:
             else:
                 direction = (np.array(target_position) - np.array(ist_position)) / np.linalg.norm(np.array(target_position) - np.array(ist_position))
                 intermediate_position = ist_position + direction * step_size
+                if not self.check_workspace(intermediate_position, elbow_left=True):
+                    return False
                 self.set_tcp_position(intermediate_position)
         return True
