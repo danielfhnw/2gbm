@@ -158,7 +158,7 @@ class Robot:
         x, y = p[0], p[1]
         print(f"\rTCP position: x={x:<6} | y={y:<6}", end="", flush=True)
 
-    def move_l(self, target_position, start_position, step_size=5):
+    def move_l(self, target_position, start_position, step_size=50):
         if not self.check_workspace(target_position, elbow_left=True):
             return False
         
@@ -169,7 +169,7 @@ class Robot:
         else:
             step_count = distance / step_size
             direction = (np.array(target_position) - np.array(start_position)) / step_count
-            for i in range(1, int(np.floor(step_count))):
+            for i in range(1, int(np.floor(step_count)) + 1):
                 intermediate_position = start_position + direction * i
                 self.path.append((start_position + direction * i).tolist())
                 if not self.check_workspace(intermediate_position, elbow_left=True):
