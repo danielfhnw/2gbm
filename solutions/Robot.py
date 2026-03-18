@@ -37,6 +37,7 @@ class Robot:
         self.motor_1.shutdown()
         self.motor_2.shutdown()
         self.port_handler.closePort()
+        self.print("Robot shutdown")
   
     def get_motor_positions(self, raw=False):
         if raw:

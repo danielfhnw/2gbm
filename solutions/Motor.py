@@ -13,6 +13,7 @@ class Motor:
 
     def shutdown(self):
         self.packet_handler.change_hold(self.id, 0)
+        print(f"Motor {self.id} shutdown")
 
     def get_position_raw(self):
         position, _, _, _ = self.packet_handler.ReadPosSpeed(self.id)
