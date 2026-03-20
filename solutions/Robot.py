@@ -176,6 +176,13 @@ class Robot:
                     return False
             self.path.append(target_position)
             return True
+        
+    def move_j(self, target_position, start_position):
+        if not self.check_workspace(target_position, elbow_left=False):
+            return False
+        
+        self.path.append(target_position)
+        return True
     
     def move(self, tolerance=2):
         if self.path:
