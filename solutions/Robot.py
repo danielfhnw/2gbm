@@ -198,3 +198,26 @@ class Robot:
                 self.path.pop(0)
             else:
                 self.set_tcp_position(target_position)
+
+    def change_motor_mode(self, mode):
+        self.motor_1.change_mode(mode)
+        self.motor_2.change_mode(mode)
+
+    def joystick_control(self, joystick_x, joystick_y):
+        self.motor_1.set_speed(joystick_y * 10)
+        self.motor_2.set_speed(joystick_x * 10)
+
+    def move_jacobian(self, joystick_x, joystick_y):
+        theta1, theta2 = self.get_motor_positions()
+        J = np.array([
+            [75 * np.sin(theta1) - 75 * np.sin(theta1 + theta2), -75 * np.sin(theta1 + theta2)],
+            [75 * np.cos(theta1 + theta2) - 75 * np.cos(theta1), 75 * np.cos(theta1 + theta2)]
+        ])
+        try:
+            J_inv = np.linalg.inv(J)
+        except np.linalg.LinAlgError:
+            print("\nJacobian is singular, cannot move.")
+            return
+        d_theta = J_inv @ np.array([joystick_x, joystick_y])
+        self.motor_1.set_speed(-d_theta[0] * 4096 / 2 / np.pi)
+        self.motor_2.set_speed(-d_theta[1] * 4096 / 2 / np.pi)
