@@ -158,9 +158,15 @@ class Robot:
         x, y = p[0], p[1]
         print(f"\rTCP position: x={x:<6} | y={y:<6}", end="", flush=True)
 
-    def move_l(self, target_position, start_position, step_size=50):
+    def move_l(self, target_position, start_position=None, step_size=10):
         if not self.check_workspace(target_position, elbow_left=True):
             return False
+        
+        if not start_position:
+            if not self.path:
+                start_position = self.get_tcp_position()
+            else:
+                start_position = self.path[-1]
         
         distance = np.linalg.norm(np.array(target_position) - np.array(start_position))
         if distance < step_size:
@@ -177,8 +183,8 @@ class Robot:
             self.path.append(target_position)
             return True
         
-    def move_j(self, target_position, start_position):
-        if not self.check_workspace(target_position, elbow_left=False):
+    def move_j(self, target_position):
+        if not self.check_workspace(target_position, elbow_left=True):
             return False
         
         self.path.append(target_position)
